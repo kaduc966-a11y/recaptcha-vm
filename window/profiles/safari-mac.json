@@ -1,0 +1,36 @@
+{
+  "id": "safari-mac",
+  "engine": "webkit",
+  "transport": {
+    "impersonate": "safari184",
+    "user_agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.4 Safari/605.1.15",
+    "sec_ch_ua": "",
+    "sec_ch_ua_mobile": "",
+    "sec_ch_ua_platform": "",
+    "accept_language": "en-US,en;q=0.9"
+  },
+  "browser": {
+    "inner_width": 1280,
+    "inner_height": 720,
+    "outer_height": 747,
+    "screen": { "width": 1920, "height": 1080, "avail_height": 1055, "color_depth": 30 },
+    "device_pixel_ratio": 2
+  },
+  "navigator": {
+    "platform": "MacIntel",
+    "languages": ["en-US", "en"],
+    "hardware_concurrency": 10,
+    "device_memory": 8,
+    "max_touch_points": 0,
+    "webdriver": false,
+    "pdf_viewer_enabled": true
+  },
+  "webgl": {
+    "vendor": "Apple Inc.",
+    "renderer": "Apple GPU"
+  },
+  "interaction": { "ready_delay_ms": 1000, "touch": false },
+  "timing": { "startup_ms": 131, "pending_ms": 240 },
+  "resource_timing": { "redirect": 0.0, "dns": 0.03, "connect": 0.1, "ttfb": 0.52, "download": 0.35 },
+  "answers": "answers/fingerprint.json"
+}

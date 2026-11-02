@@ -1,0 +1,5 @@
+# pinned to the host toolchain (DESIGN.md §9.2) — cfsolve pins 1.98.0 on its machine; this
+# host verifies 1.99.0 (cargo 1.99.0 / rustc 1.99.0, probed 2026-11-01).
+[toolchain]
+channel = "1.99.0"
+profile = "minimal"

@@ -1,0 +1,23 @@
+# tr亃n:
+/window-vm/target/
+/target/
+# python
+__pycache__/
+*.pyc
+# runtime dumps (token/log/mp3) — tuyệt đối KHÔNG commit material capture (rule 2)
+/dumps/
+*.mp3
+userverify.txt
+reload_*.txt
+token_*.txt
+tokens.log
+window.json
+# env / secrets
+.env
+*.key
+# OS
+Thumbs.db
+Desktop.ini
+
+# whisper bundles are >100MB (GitHub file limit) — keep local copies out of the repo
+models/faster-whisper-*/

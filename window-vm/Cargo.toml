@@ -1,0 +1,42 @@
+[package]
+name = "window-vm"
+version = "0.1.0"
+edition = "2021"
+description = "rc_jsdom's full-Rust engine: fake window + captured BotGuard VM (boa) + the complete Google API chain over wreq/BoringSSL (DESIGN.md §9-§10)"
+
+[dependencies]
+# TLS: the published wreq path — its backend is BoringSSL (btls/btls-sys), the same machinery
+# cfsolve's http/ + session/ layers are built on (DESIGN.md §9.1 deviation 2). NO vendor patch:
+# our impersonation target is chrome120, which the published profile carries.
+wreq = { version = "=0.16.1", features = ["cookies", "gzip", "brotli", "deflate", "zstd"] }
+wreq-util = { version = "0.2.0", features = ["emulation-serde", "emulation-compression"] }
+# the JS engine: real execution of the captured vm.js + bc.txt (deviation 1 — cfsolve embeds no
+# engine; its src/js.rs + src/vm.rs FACADE SPLIT is what we mirror).
+boa_engine = "0.20"
+serde = { version = "1.0", features = ["derive"] }
+# preserve_order: the fingerprint/oc serializations must match the JS JSON.stringify byte order.
+serde_json = { version = "1.0", features = ["preserve_order"] }
+clap = { version = "4", features = ["derive"] }
+anyhow = "1"
+base64 = "0.22"
+rand = "0.8"
+sha2 = "0.10"
+hmac = "0.12"
+url = "2"
+# std has no timezone API; Idx 68 answers the REAL local offset like the node runner.
+chrono = "0.4"
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "time"] }
+
+[profile.release]
+# BoringSSL + boa link size: keep the binary lean.
+strip = "debuginfo"
+
+# Vendored fix for boa_gc 0.20.0 (upstream bug, patch in vendor/boa_gc/src/lib.rs): the
+# weak-mark phase of Collector::mark_heap re-traces every popped node WITHOUT a mark
+# check, so trace/enqueue counts grow with the number of PATHS through the reachable
+# graph (exponential in DAG depth, unbounded on cycles). Any weak-enabled heap with a
+# non-trivial reachable graph (the widget bundle creates WeakMaps) exploded the Tracer
+# VecDeque into 1→2→4→8→16 GB realloc requests and killed the process (0xC0000409).
+# The vendored copy adds the same is_marked guard the preliminary phase already had.
+[patch.crates-io]
+boa_gc = { path = "vendor/boa_gc" }
