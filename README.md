@@ -1,6 +1,6 @@
-# recaptcha-vm-browserless
+# recaptcha-vm
 
-recaptcha-vm-browserless is a Rust command line tool that solves reCAPTCHA v2 challenges
+recaptcha-vm is a Rust command line tool that solves reCAPTCHA v2 challenges
 without a headless browser. It replays the full Google API chain (anchor → reload →
 challenge → userverify) over a TLS-impersonating HTTP client with an in-process JS VM, and
 returns a `g-recaptcha-response` token. A small Python shim (`solve_service.py`) provides
